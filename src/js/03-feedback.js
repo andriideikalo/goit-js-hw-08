@@ -1,47 +1,43 @@
 import throttle from 'lodash.throttle';
 
 
+const feedbackForm = document.querySelector('.feedback-form');
+const email = document.querySelector('.feedback-form input');
+const message = document.querySelector('.feedback-form textarea');
 
-const key = 'feedback-form-state'
-
-const refs = {
-    form: document.querySelector('.feedback-form'),
-    email: document.querySelector('.feedback-form input'),
-    message: document.querySelector('.feedback-form textarea')
-};
+console.log(feedbackForm)
+console.log(email)
+console.log(message)
 
 const userData = {};
 const onSetData = throttle(function(event) {
-    userData.email = refs.email.value
-    userData.message = refs.message.value
-    localStorage.setItem(key, JSON.stringify(userData))
+    userData.email = email.value
+    userData.message = message.value
+    localStorage.setItem('feedback-form', JSON.stringify(userData))
 }, 500)
 
-refs.form.addEventListener(`submit`, onFormSubmit);
-refs.email.addEventListener(`input`, onSetData);
-refs.message.addEventListener(`input`, onSetData);
+feedbackForm.addEventListener(`submit`, onFormSubmit);
+email.addEventListener(`input`, onSetData);
+message.addEventListener(`input`, onSetData);
 
-
-
-function onFormSubmit(event) {
-    event.preventDefault();
-    console.log(`e-mail: ${refs.email.value}, message: ${refs.message.value}`)
-
-    event.currentTarget.reset();
-    localStorage.removeItem(key)
-}
 onGetData()
 
 function onGetData() {
-    const savedData = localStorage.getItem(key);
+    const savedData = localStorage.getItem('feedback-form');
     const parseData = JSON.parse(savedData);
     if (parseData) {
-        refs.email.value = parseData.email || ``
-        refs.message.value = parseData.message || ``
+        email.value = parseData.email || ``
+        message.value = parseData.message || ``
     }
 }
 
+function onFormSubmit(event) {
+    event.preventDefault();
+    console.log(`e-mail: ${email.value}, message: ${message.value}`)
 
+    // event.currentTarget.reset();
+    localStorage.getItem('feedback-form')
+}
 
 
 

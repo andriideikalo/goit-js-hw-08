@@ -3,13 +3,13 @@ import throttle from 'lodash.throttle';
 const feedbackForm = document.querySelector('.feedback-form');
 const email = document.querySelector('.feedback-form input');
 const message = document.querySelector('.feedback-form textarea');
-
+const KEY = 'feedback-form-state';
 // console.log(feedbackForm)
 // console.log(email)
 // console.log(message)
 
 try {
-    const beforeData = localStorage.getItem('feedback-form-state');
+    const beforeData = localStorage.getItem(KEY);
     const currentData = JSON.parse(beforeData);
     if (currentData) {
         email.value = currentData.email
@@ -20,7 +20,7 @@ try {
 }
 // ще варіант 
 
-// const beforeData = localStorage.getItem('feedback-form-state');
+// const beforeData = localStorage.getItem(KEY);
 // const currentData = JSON.parse(beforeData) || {};
 // if (currentData) {
 //     email.value = currentData.email || ``
@@ -31,7 +31,7 @@ const userData = {};
 const onSetData = throttle(function(event) {
     userData.email = email.value
     userData.message = message.value
-    localStorage.setItem('feedback-form-state', JSON.stringify(userData))
+    localStorage.setItem(KEY, JSON.stringify(userData))
 }, 500)
 
 
@@ -42,6 +42,6 @@ message.addEventListener(`input`, onSetData);
 feedbackForm.addEventListener(`submit`, (event) => {
     event.preventDefault();
     console.log(`e-mail: ${email.value}, message: ${message.value}`)
-    localStorage.removeItem('feedback-form-state')
+    localStorage.removeItem(KEY)
     event.target.reset();
 })

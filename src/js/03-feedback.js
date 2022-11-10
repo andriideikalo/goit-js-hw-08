@@ -9,7 +9,7 @@ const message = document.querySelector('.feedback-form textarea');
 // console.log(message)
 
 const beforeData = localStorage.getItem('feedback-form-state');
-const currentData = JSON.parse(beforeData);
+const currentData = JSON.parse(beforeData) || {};
 if (currentData) {
     email.value = currentData.email || ``
     message.value = currentData.message || ``

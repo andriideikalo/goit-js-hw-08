@@ -8,12 +8,24 @@ const message = document.querySelector('.feedback-form textarea');
 // console.log(email)
 // console.log(message)
 
-const beforeData = localStorage.getItem('feedback-form-state');
-const currentData = JSON.parse(beforeData) || {};
-if (currentData) {
-    email.value = currentData.email || ``
-    message.value = currentData.message || ``
+try {
+    const beforeData = localStorage.getItem('feedback-form-state');
+    const currentData = JSON.parse(beforeData);
+    if (currentData) {
+        email.value = currentData.email
+        message.value = currentData.message
+    }
+} catch (error) {
+    console.log(error)
 }
+// ще варіант 
+
+// const beforeData = localStorage.getItem('feedback-form-state');
+// const currentData = JSON.parse(beforeData) || {};
+// if (currentData) {
+//     email.value = currentData.email || ``
+//     message.value = currentData.message || ``
+// }
 
 const userData = {};
 const onSetData = throttle(function(event) {
